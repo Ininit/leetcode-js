@@ -9,7 +9,7 @@
  * @param {number[]} nums
  * @return {number}
  */
-var lengthOfLIS = function(nums) {
+var lengthOfLISDP = function(nums) {
   if(nums.length === 0) {
     return 0
   }
@@ -29,3 +29,28 @@ var lengthOfLIS = function(nums) {
 };
 // @lc code=end
 
+var lengthOfLIS = function(nums) {
+  const d = []
+
+  for(const num of nums) {
+    if(d.length == 0 || num > d[d.length - 1]) {
+      d.push(num)
+    } else {
+      let low = 0, high = d.length
+      while(low < high) {
+        const mid = low + ((high - low) >> 1)
+        if(d[mid] < num) {
+          low = mid + 1
+        } else {
+          high = mid
+        }
+      }
+      d[low] = num
+    }
+  }
+
+  return d.length
+}
+
+console.log(lengthOfLIS([1,4,6,3,2,4,5,6,7,8]))
+console.log(lengthOfLISDP([1,4,6,3,2,4,5,6,7,8]))
